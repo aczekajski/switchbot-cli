@@ -112,7 +112,6 @@ const groups = {
 const main = async () => {
     const [, , ...argv2] = process.argv;
     const [group, ...params] = argv2;
-    console.log(argv2);
 
     const groupFn = groups[group];
 
@@ -121,7 +120,12 @@ const main = async () => {
         process.exit(1);
     }
 
-    await groupFn(params);
+    try {
+        await groupFn(params);
+    } catch(e) {
+        console.error('Sth went wrong :<', e);
+        process.exit(1);
+    }
 };
 
 main();
