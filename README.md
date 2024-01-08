@@ -50,3 +50,16 @@ This refers to manually executable scenes, not "automations".
 switchbot-cli scenes SCENEID
 ```
 - `SCENEID` is an ID that can be obtained from the list of all scenes
+
+## Development
+Requires `nodeJS` 14+.
+
+Can be run as `node index.js` during development.
+
+Building binaries requires `pkg` (`npm i -g pkg`).
+
+To build:
+```
+./build.sh
+```
+(on Windows use git-bash or WSL)
