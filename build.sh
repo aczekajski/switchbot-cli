@@ -1,0 +1,1 @@
+pkg index.js -o dist/switchbot-cli -t latest-linux-x64,latest-macos-x64,latest-win-x64
