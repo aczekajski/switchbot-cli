@@ -3,7 +3,7 @@ const path = require("path");
 const { makeRequest } = require('./switchbot');
 
 const getAuthFilePath = () => {
-    return path.join(process.cwd(), 'AUTH');
+    return path.join(process.cwd(), 'SWITCHBOT-AUTH');
 }
 
 const readAuth = () => {
@@ -123,7 +123,8 @@ const main = async () => {
     try {
         await groupFn(params);
     } catch(e) {
-        console.error('Sth went wrong :<', e);
+        console.error('Sth went wrong :<');
+        console.error(e);
         process.exit(1);
     }
 };

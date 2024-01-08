@@ -3,6 +3,12 @@
 This is a very simple CLI tool to interact with SwitchBot API.
 
 ## Usage
+### Configure (once before first use)
+Run below command to save authentication data for your SwitchBot account:
+```
+switchbot-cli config auth
+```
+> ⚠ Warning! The token and secret invilved in this step are sensitive data! They will be stored in file named `SWITCHBOT-AUTH` in the current working directory (folder you're running the command from). Plase make sure it is not exposed to 3rd parties and remains safe!
 
 ### List all devices
 ```bash
