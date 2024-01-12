@@ -35,14 +35,18 @@ const makeRequest = async ({ token, secret }, path, method, body) => {
     return new Promise((resolve, reject) => {
         try {
             const req = https.request(options, res => {
-                console.log(`statusCode: ${res.statusCode}`);
                 res.on('data', d => {
-                    resolve(d.toString());
+                    if (res.statusCode >= 200 && res.statusCode < 300) {
+                        resolve(JSON.parse(d.toString()));
+                    } else {
+                        console.error(`statusCode: ${res.statusCode}`);
+                        reject(d.toString());
+                    }
                 });
             });
 
             req.on('error', error => {
-                console.error(error);
+                console.error('request error', error);
                 reject(error);
             });
 

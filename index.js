@@ -46,7 +46,11 @@ const groups = {
 
         if (!cmd) {
             const result = await makeRequest(readAuth(), `devices/${id}/status`, 'GET');
-            console.log(result);
+            if (result?.statusCode === 100) {
+                console.log(JSON.stringify(result?.body));
+            } else {
+                throw new Error(JSON.stringify(result));
+            }
             return;
         }
 
@@ -64,13 +68,17 @@ const groups = {
             commandType
         };
         const result = await makeRequest(readAuth(), `devices/${id}/commands`, 'POST', body);
-        console.log(result);
+        if (result?.statusCode === 100) {
+            console.log(JSON.stringify(result?.body));
+        } else {
+            throw new Error(JSON.stringify(result));
+        }
     },
     devicesList: async () => {
         const result = await makeRequest(readAuth(), 'devices', 'GET');
 
-        const physicalDevices = JSON.parse(result).body.deviceList;
-        const virtualDevices = JSON.parse(result).body.infraredRemoteList;
+        const physicalDevices = result.body.deviceList;
+        const virtualDevices = result.body.infraredRemoteList;
         physicalDevices.forEach(device => {
             console.log(device.deviceId + '\t' + device.deviceType + '\t' + device.deviceName);
         });
@@ -85,12 +93,12 @@ const groups = {
             return groups.scenesList();
         }
 
-        const result = await makeRequest(readAuth(), `scenes/${id}/${cmd}`, 'POST');
-        console.log(JSON.parse(result));
+        await makeRequest(readAuth(), `scenes/${id}/${cmd}`, 'POST');
+        console.log('OK');
     },
     scenesList: async () => {
         const result = await makeRequest(readAuth(), 'scenes', 'GET');
-        const scenes = JSON.parse(result).body;
+        const scenes = result?.body;
         scenes.forEach(scene => {
             console.log(scene.sceneId + '\t' + scene.sceneName);
         });
@@ -99,7 +107,7 @@ const groups = {
         const [cmd] = params;
 
         if (cmd === 'auth') {
-            console.log('You need to abtain "token" and "secret" from app: https://support.switch-bot.com/hc/en-us/articles/12822710195351-How-to-obtain-a-Token-');
+            console.log('You need to obtain "token" and "secret" from app: https://support.switch-bot.com/hc/en-us/articles/12822710195351-How-to-obtain-a-Token-');
             const token = await getInputLine('token: ');
             const secret = await getInputLine('secret: ');
 
@@ -122,7 +130,7 @@ const main = async () => {
 
     try {
         await groupFn(params);
-    } catch(e) {
+    } catch (e) {
         console.error('Sth went wrong :<');
         console.error(e);
         process.exit(1);

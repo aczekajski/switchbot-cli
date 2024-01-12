@@ -8,7 +8,7 @@ Run below command to save authentication data for your SwitchBot account:
 ```
 switchbot-cli config auth
 ```
-> ⚠ Warning! The token and secret invilved in this step are sensitive data! They will be stored in file named `SWITCHBOT-AUTH` in the current working directory (folder you're running the command from). Plase make sure it is not exposed to 3rd parties and remains safe!
+> ⚠ Warning! The token and secret involved in this step are sensitive data! They will be stored in file named `SWITCHBOT-AUTH` in the current working directory (folder you're running the command from). Plase make sure it is not exposed to 3rd parties and remains safe!
 
 ### List all devices
 ```bash
@@ -44,6 +44,8 @@ switchbot-cli devices DEVICEID "custom/BUTTONNAME"
 ```
 - `DEVICEID` is an ID that can be obtained from the list of all devices
 - `BUTTONNAME` is a literal name of custom button as seen in switchbot app
+
+> Seems that pressing some predefined buttons on infrared devices is not possible at the moment as they are not listed in API docs and are not reacting to calling the button by its name. If you want to press such button via API, create a custom button with the same function or a manual scene that presses the desired button.
 
 ### List all scenes
 ```bash
