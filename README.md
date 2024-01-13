@@ -1,9 +1,21 @@
 # switchbot-cli
 
-This is a very simple CLI tool to interact with SwitchBot API.
+This is a very simple CLI tool to interact with SwitchBot API. Binaries are provided in [Releases page](https://github.com/aczekajski/switchbot-cli/releases) so it's ready to use.
 
 ## Usage
-### Configure (once before first use)
+### Authentication
+There are three ways in which you can provide authentication data for your requests:
+1. Save it to local file using [Save auth info](#save-auth-info) command
+1. Pass it as an argument using `--auth=TOKEN,SECRET` option before the main command ([how to obtain secret and token from app](https://support.switch-bot.com/hc/en-us/articles/12822710195351-How-to-obtain-a-Token-)). Example:
+    ```bash
+    switchbot-cli --auth=qwertyuiop124567890,asdfghjkl devices
+    ```
+1. Provide it each time you execute the command using `--authInteractive` option before the main command. Program will ask you to provide them before executing the request. Example:
+    ```bash
+    switchbot-cli --authInteractive scenes
+    ```
+
+### Save auth info
 Run below command to save authentication data for your SwitchBot account:
 ```
 switchbot-cli config auth
