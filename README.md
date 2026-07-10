@@ -57,7 +57,15 @@ switchbot-cli devices DEVICEID "custom/BUTTONNAME"
 - `DEVICEID` is an ID that can be obtained from the list of all devices
 - `BUTTONNAME` is a literal name of custom button as seen in switchbot app
 
-> Seems that pressing some predefined buttons on infrared devices is not possible at the moment as they are not listed in API docs and are not reacting to calling the button by its name. If you want to press such button via API, create a custom button with the same function or a manual scene that presses the desired button.
+or if you're having trouble passing utf-8 characters as `BUTTONNAME`:
+
+```bash
+switchbot-cli devices DEVICEID "custom-escaped/ESCAPEDBUTTONNAME"
+```
+- `DEVICEID` is an ID that can be obtained from the list of all devices
+- `ESCAPEDBUTTONNAME` is an escaped literal name of the custom button (via JS `escape` function, you can also use https://www.utilities-online.info/urlencode to do it manually). For example if button is called "⚡🔥", it will become "%u26A1%uD83D%uDD25"
+
+> Seems that pressing some predefined buttons (not custom ones!) on infrared devices is not possible at the moment as they are not listed in API docs and are not reacting to calling the button by its name. If you want to press such button via API, create a custom button with the same function or a manual scene that presses the desired button.
 
 ### List all scenes
 ```bash

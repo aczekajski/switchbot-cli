@@ -131,8 +131,13 @@ const groups = {
         let command = cmd;
         let commandType = 'command';
         const customCommandPrefix = 'custom/';
+        const customEscapedCommandPrefix = 'custom-escaped/';
         if (cmd.startsWith(customCommandPrefix)) {
             command = cmd.substring(customCommandPrefix.length);
+            commandType = 'customize';
+        }
+        if (cmd.startsWith(customEscapedCommandPrefix)) {
+            command = unescape(cmd.substring(customEscapedCommandPrefix.length));
             commandType = 'customize';
         }
 
@@ -200,7 +205,7 @@ const main = async () => {
         const groupFn = groups[group];
 
         if (!groupFn) {
-            throw new Error(`Wrong main command name: ${group}`);
+            throw new Error(`Wrong main command name: ${group}. Valid commands are: ${Object.keys(groups).join(', ')}`);
         }
 
         await groupFn(params);

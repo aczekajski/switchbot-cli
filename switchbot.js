@@ -13,6 +13,7 @@ const makeRequest = async ({ token, secret }, path, method, body) => {
     const sign = signTerm.toString("base64");
 
     const serializedBody = JSON.stringify(body) || '';
+    const contentLength = Buffer.from(serializedBody, "utf8").byteLength;
 
     const options = {
         hostname: 'api.switch-bot.com',
@@ -24,13 +25,14 @@ const makeRequest = async ({ token, secret }, path, method, body) => {
             "sign": sign,
             "nonce": nonce,
             "t": t,
-            'Content-Type': 'application/json',
-            'Content-Length': serializedBody?.length || 0,
+            'Content-Type': 'application/json; charset=utf-8',
+            'Content-Length': contentLength || 0,
         },
     };
 
     // console.log(options);
-    // console.log(body);
+    // console.log('body', serializedBody);
+    // console.log('body len', contentLength);
 
     return new Promise((resolve, reject) => {
         try {
